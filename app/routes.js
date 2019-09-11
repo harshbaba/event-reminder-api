@@ -25,7 +25,8 @@ module.exports = function(app) {
 
         console.log(req.body);
         // create a sample user
-        var user = new User({ 
+        var user = new User({
+            _id         : req.body.emailId,
             firstName   : req.body.firstName,
             lastName    : req.body.lastName,  
             emailId     : req.body.emailId,
@@ -38,7 +39,7 @@ module.exports = function(app) {
         user.save(function(err) {
             if (err){
                 if(err.code == 11000){
-                    res.json({success: false, message: "This User Id has been already taken!"});
+                    res.json({success: false, message: "This Email Id has been already registered!"});
                 }
             }
             else{
@@ -165,7 +166,7 @@ module.exports = function(app) {
     app.get('/allEvents', function(req, res){
         let mockData = [
             {
-             "id":"",
+             "id":"1",
              "eventType":"Birthday",
              "eventName":"Rahul's Birthday",
              "eventDate":"12-Jul-2019",
@@ -174,8 +175,8 @@ module.exports = function(app) {
              "eventCreatedBy":"abc@com",
             },
             {
-             "id":"",
-             "eventType":"Birthday",
+             "id":"2",
+             "eventType":"Anniversary",
              "eventName":"Rahul's Anniversary",
              "eventDate":"12-Jul-2019",
              "name":"harsh",
@@ -183,7 +184,7 @@ module.exports = function(app) {
              "eventCreatedBy":"abc@com",
             },
             {
-             "id":"",
+             "id":"3",
              "eventType":"One Time Event",
              "eventName":"5km walk event",
              "eventDate":"12-Jul-2019",
