@@ -34,6 +34,7 @@ module.exports = function(app) {
             password    : req.body.password 
         });
 
+        
     
         // save the user
         user.save(function(err) {
