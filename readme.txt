@@ -61,5 +61,66 @@ password        : String
     "message": "Something went wrong"
 }
 
-3.Events Api URL (GET)
+3.Events Api URL (Post)
 https://event-reminder-app.herokuapp.com/allEvents
+1.All Events Request Data (POST)
+
+emailId         : String,
+
+===Response===
+1.Pass Case
+{
+    "success": true,
+    "data": [
+        {
+            "_id": "5d7aa7f53c10ee2cfc9627e7",
+            "eventType": "Birthday",
+            "eventName": "Jack's Birthday",
+            "eventDate": "2019-12-02",
+            "emailId": "harshbaba007@gmail.com",
+            "mobileNo": 9999222200,
+            "isRepeatAnnually": true,
+            "__v": 0
+        },
+        {
+            "_id": "5d7aa8811a55c93024ab91f9",
+            "eventType": "Birthday",
+            "eventName": "Ipsita's Birthday",
+            "eventDate": "2019-12-22",
+            "emailId": "harshbaba007@gmail.com",
+            "mobileNo": 9999333300,
+            "isRepeatAnnually": true,
+            "__v": 0
+        },
+    ]
+}
+
+4.Create Event Url (Post)
+https://event-reminder-app.herokuapp.com/createEvent
+
+1.Request
+eventType       : Birthday, Anniversary, Other,
+eventName       : Rahul Semwal's Birthday,
+eventDate       : 2019-12-02,
+emailId         : Your Email Id (User Email Id),
+mobileNo        : event person mobile no, 
+isRepeatAnnually: true or false,
+
+5.Delete Event Url (Post)
+https://event-reminder-app.herokuapp.com/deleteEvent
+
+1.Request
+emailId: harshbaba007@gmail.com
+_id:     Event id ex: 5d7aa7f53c10ee2cfc9627e7
+
+6.Edit an Event Url (Post)
+https://event-reminder-app.herokuapp.com/editEvent
+
+1.Request
+_id             : Event id ex: 5d7aa7f53c10ee2cfc9627e7
+eventType       : Birthday, Anniversary, Other,
+eventName       : Rahul Semwal's Birthday,
+eventDate       : 2019-12-02,
+emailId         : Your Email Id (User Email Id),
+mobileNo        : event person mobile no, 
+isRepeatAnnually: true or false,

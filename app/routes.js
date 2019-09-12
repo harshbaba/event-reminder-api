@@ -5,6 +5,7 @@ module.exports = function(app) {
     var config                  = require('../config'); // get our config file
     var User                    = require('./models/user'); // get our mongoose model of users
     var port                    = process.env.PORT || 5000; // used to create, sign, and verify tokens
+    var Event                   = require('./models/event'); // get our mongoose model of Events
 
     //cors request
     app.use(function(req, res, next) {
@@ -164,39 +165,79 @@ module.exports = function(app) {
 
     */
 
-    app.get('/allEvents', function(req, res){
-        let mockData = [
-            {
-             "id":"1",
-             "eventType":"Birthday",
-             "eventName":"Rahul's Birthday",
-             "eventDate":"12-Jul-2019",
-             "name":"harsh",
-             "description":"lorem ipsum",
-             "eventCreatedBy":"abc@com",
-            },
-            {
-             "id":"2",
-             "eventType":"Anniversary",
-             "eventName":"Rahul's Anniversary",
-             "eventDate":"12-Jul-2019",
-             "name":"harsh",
-             "description":"lorem ipsum",
-             "eventCreatedBy":"abc@com",
-            },
-            {
-             "id":"3",
-             "eventType":"One Time Event",
-             "eventName":"5km walk event",
-             "eventDate":"12-Jul-2019",
-             "name":"harsh",
-             "description":"lorem ipsum",
-             "eventCreatedBy":"abc@com",
+    app.post('/allEvents', function(req, res){
+        console.log(req.body);
+        Event.find({
+            emailId: req.body.emailId
+        },function(err, events){
+            if(err){
+                res.json({success: false, message: err});
+            }else{
+                res.json({success: true, data: events});
             }
-        ];
+        });
+    });
 
-        res.send({"success": true, data: mockData});
-            
+    //create a new event
+    app.post('/createEvent', function(req,res){
+        console.log(req.body);
+        // create a sample user
+        var eventInd = new Event({
+            eventType       : req.body.eventType,
+            eventName       : req.body.eventName,
+            eventDate       : req.body.eventDate,
+            emailId         : req.body.emailId,
+            mobileNo        : req.body.mobileNo, 
+            isRepeatAnnually: req.body.isRepeatAnnually,
+        });
+
+        eventInd.save(function(err, event){
+            if(err){
+                res.json({success: false, message: err});
+            }else{
+                console.log('Event saved successfully');
+                console.log(event);
+                res.json({ success: true, message: 'Event saved successfully', eventData: event });
+            }
+        });
+    });
+
+    //Delete an event
+    app.post('/deleteEvent', function(req,res){
+        console.log(req.body);
+        var query = { emailId: req.body.emailId, _id: req.body._id };
+
+        Event.deleteOne(query, function (err, result) {
+            if (err) {
+                res.json({success: false, message: err});
+            } else {
+                res.json({success: true, message: 'Event Delete Successfully', data: result});
+            }
+
+        });
+    });
+
+    //Edit an Event
+    app.post('/editEvent', function(req, res){
+        console.log(req.body);
+        var query = { emailId: req.body.emailId, _id: req.body._id };
+        var options = { new: true };
+        var updateEventObj = {
+            eventType       : req.body.eventType,
+            eventName       : req.body.eventName,
+            eventDate       : req.body.eventDate,
+            emailId         : req.body.emailId,
+            mobileNo        : req.body.mobileNo, 
+            isRepeatAnnually: req.body.isRepeatAnnually,
+        };
+        Event.findOneAndUpdate(query, {$set: updateEventObj}, options, function (err, doc) {
+            if (err) {
+                res.json({success: false, message:err});
+            } else {
+                res.json({success: true, message: "Event update successfully", data: doc});
+            }
+
+        });
     });
     
 
