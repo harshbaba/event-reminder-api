@@ -198,10 +198,6 @@ module.exports = function(app) {
         res.send({"success": true, data: mockData});
             
     });
-
-    app.get('/test1', function(req,res){
-        res.send({success: true});
-    });
     
 
 };
