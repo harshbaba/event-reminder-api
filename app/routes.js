@@ -27,7 +27,6 @@ module.exports = function(app) {
         console.log(req.body);
         // create a sample user
         var user = new User({
-            _id         : req.body.emailId,
             firstName   : req.body.firstName,
             lastName    : req.body.lastName,  
             emailId     : req.body.emailId,
@@ -35,17 +34,16 @@ module.exports = function(app) {
             password    : req.body.password 
         });
 
-        
-    
         // save the user
         user.save(function(err) {
             if (err){
                 if(err.code == 11000){
                     res.json({success: false, message: "This Email Id has been already registered!"});
+                }else{
+                    res.json({success: false, message: err});
                 }
             }
             else{
-                console.log('User saved successfully');
                 res.json({ success: true, message: 'User saved successfully' });
             }
         });
