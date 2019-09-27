@@ -181,7 +181,7 @@ module.exports = function(app) {
         console.log(req.body);
         Event.findOne({
             //emailId: req.body.emailId,
-            emailId: "harshbaba007@gmail.com", _id: req.body._id
+            emailId: "harshbaba007@gmail.com", _id: req.query._id
         },function(err, event){
             if(err){
                 res.json({success: false, message: err});
