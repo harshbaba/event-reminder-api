@@ -179,7 +179,7 @@ module.exports = function(app) {
     
     app.get('/eventDetails', function(req, res){
         console.log(req.body);
-        Event.find({
+        Event.findOne({
             //emailId: req.body.emailId,
             emailId: "harshbaba007@gmail.com", _id: req.query.id
         },function(err, event){
