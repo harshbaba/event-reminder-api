@@ -176,6 +176,20 @@ module.exports = function(app) {
             }
         });
     });
+    
+    app.get('/eventDetails', function(req, res){
+        console.log(req.body);
+        Event.find({
+            //emailId: req.body.emailId,
+            emailId: "harshbaba007@gmail.com", id: req.query.id
+        },function(err, event){
+            if(err){
+                res.json({success: false, message: err});
+            }else{
+                res.json({success: true, data: event});
+            }
+        });
+    });
 
     //create a new event
     app.post('/createEvent', function(req,res){
