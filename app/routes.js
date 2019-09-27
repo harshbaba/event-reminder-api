@@ -218,7 +218,7 @@ module.exports = function(app) {
     //Delete an event
     app.post('/deleteEvent', function(req,res){
         console.log(req.body);
-        var query = { emailId: req.body.emailId, _id: req.body._id };
+        var query = { emailId: req.body.emailId, _id: req.query._id };
 
         Event.deleteOne(query, function (err, result) {
             if (err) {
