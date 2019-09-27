@@ -163,10 +163,11 @@ module.exports = function(app) {
 
     */
 
-    app.post('/allEvents', function(req, res){
+    app.get('/allEvents', function(req, res){
         console.log(req.body);
         Event.find({
-            emailId: req.body.emailId
+            //emailId: req.body.emailId,
+            emailId: "harshbaba007@gmail.com"
         },function(err, events){
             if(err){
                 res.json({success: false, message: err});
