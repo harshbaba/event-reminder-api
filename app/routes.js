@@ -128,13 +128,10 @@ module.exports = function(app) {
     // route middleware to verify a token
     /*
     app.use(function(req, res, next) {
-
         // check header or url parameters or post parameters for token
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
         // decode token
         if (token) {
-
             // verifies secret and checks exp
             jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
             if (err) {
@@ -148,45 +145,26 @@ module.exports = function(app) {
                 next();
             }
             });
-
         } else {
-
             // if there is no token
             // return an error
             return res.status(403).send({ 
                 success: false, 
                 message: 'No token provided.' 
             });
-
         }
     });
-
     */
 
-    app.get('/allEvents', function(req, res){
+    app.post('/allEvents', function(req, res){
         console.log(req.body);
         Event.find({
-            //emailId: req.body.emailId,
-            emailId: "harshbaba007@gmail.com"
+            emailId: req.body.emailId
         },function(err, events){
             if(err){
                 res.json({success: false, message: err});
             }else{
                 res.json({success: true, data: events});
-            }
-        });
-    });
-    
-    app.get('/eventDetails', function(req, res){
-        console.log(req.body);
-        Event.findOne({
-            //emailId: req.body.emailId,
-            emailId: "harshbaba007@gmail.com", _id: req.query._id
-        },function(err, event){
-            if(err){
-                res.json({success: false, message: err});
-            }else{
-                res.json({success: true, data: event});
             }
         });
     });
@@ -218,7 +196,7 @@ module.exports = function(app) {
     //Delete an event
     app.post('/deleteEvent', function(req,res){
         console.log(req.body);
-        var query = { emailId: req.body.emailId, _id: req.query._id };
+        var query = { emailId: req.body.emailId, _id: req.body._id };
 
         Event.deleteOne(query, function (err, result) {
             if (err) {
